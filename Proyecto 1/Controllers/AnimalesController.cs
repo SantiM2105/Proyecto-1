@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_1.Data;
 using Proyecto_1.Models;
-
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.Layout;
 namespace Proyecto_1.Controllers
+
 {
     public class AnimalesController : Controller
     {
