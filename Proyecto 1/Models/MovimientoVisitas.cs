@@ -33,7 +33,7 @@ namespace Proyecto_1.Models
 
         // Navegación
         public Visitantes? Visitante { get; set; }
-        public Animales? Animal { get; set; }
+        public Animal? Animal { get; set; }
         public Cuidadores? Cuidador { get; set; }
     }
 }

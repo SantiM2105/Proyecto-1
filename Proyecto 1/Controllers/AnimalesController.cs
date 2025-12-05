@@ -58,7 +58,7 @@ namespace Proyecto_1.Controllers
         // POST: Animales/Crear
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear([Bind("IdAnimal,Nombre,Especie,Habitat,Edad,EstadoSalud,IdCuidador")] Animales animal)
+        public async Task<IActionResult> Crear([Bind("IdAnimal,Nombre,Especie,Habitat,Edad,EstadoSalud,IdCuidador")] Animal animal)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace Proyecto_1.Controllers
         // POST: Animales/Editar/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, [Bind("IdAnimal,Nombre,Especie,Habitat,Edad,EstadoSalud,IdCuidador")] Animales animal)
+        public async Task<IActionResult> Editar(int id, [Bind("IdAnimal,Nombre,Especie,Habitat,Edad,EstadoSalud,IdCuidador")] Animal animal)
         {
             if (id != animal.IdAnimal)
             {
@@ -163,47 +163,60 @@ namespace Proyecto_1.Controllers
         {
             return _context.Animales.Any(e => e.IdAnimal == id);
         }
-    
 
-    public async Task<IActionResult> Reporte()
+
+        public async Task<IActionResult> Reporte()
         {
             return View(await _context.Animales.ToListAsync());
         }
         public async Task<IActionResult> GenerarPdf()
         {
             var animales = await _context.Animales.ToListAsync();
+
             using (var flujo = new MemoryStream())
             {
                 PdfWriter escribir = new PdfWriter(flujo);
                 PdfDocument pdf = new PdfDocument(escribir);
                 Document documento = new Document(pdf);
-                documento.Add(new Paragraph("Reporte de Animales")
-                .SetTextAlignment(TextAlignment.CENTER)
-                .SetFontSize(20));
-                Table tabla = new Table(new float[] { 1, 2, 2, 2, 2 }).UseAllAvailableWidth();
-                tabla.AddHeaderCell("Nit");
-                tabla.AddHeaderCell("Empresa");
-                tabla.AddHeaderCell("Dirección");
-                tabla.AddHeaderCell("Teléfono");
-                tabla.AddHeaderCell("Ciudad");
-                foreach (var animales in Animales)
+
+                documento.Add(new Paragraph("Reporte de Animales del Zoológico")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFontSize(20));
+
+                // Tabla con columnas para Animales (ajustadas a TU modelo)
+                Table tabla = new Table(new float[] { 1, 2, 2, 2, 1, 2, 2 }).UseAllAvailableWidth();
+
+                // ENCABEZADOS para Animales (NO para Clientes)
+                tabla.AddHeaderCell("ID");
+                tabla.AddHeaderCell("Nombre");
+                tabla.AddHeaderCell("Especie");
+                tabla.AddHeaderCell("Hábitat");
+                tabla.AddHeaderCell("Edad");
+                tabla.AddHeaderCell("Salud");
+                tabla.AddHeaderCell("Cuidadores");
+
+                foreach (var animal in animales) 
                 {
-                    // Filas de datos
-                    tabla.AddCell(animales.Nit.ToString());
-                    tabla.AddCell(animales.Empresa);
-                    tabla.AddCell(animales.Direccion);
-                    tabla.AddCell(animales.Telefono);
-                    tabla.AddCell(animales.Ciudad);
+                    tabla.AddCell(animal.IdAnimal.ToString());
+                    tabla.AddCell(animal.Nombre);
+                    tabla.AddCell(animal.Especie);
+                    tabla.AddCell(animal.Habitat);
+                    tabla.AddCell(animal.Edad.ToString());
+                    tabla.AddCell(animal.EstadoSalud);
+                    tabla.AddCell(animal.Cuidador.ToString());
                 }
+
                 documento.Add(tabla);
-                documento.Add(new Paragraph("Reporte generado el " +
-                DateTime.Now.ToString("dd/MM/yyyy"))
-                .SetTextAlignment(TextAlignment.RIGHT)
-                .SetFontSize(12));
+
+                documento.Add(new Paragraph("Reporte generado el " + DateTime.Now.ToString("dd/MM/yyyy"))
+                    .SetTextAlignment(TextAlignment.RIGHT)
+                    .SetFontSize(12));
+
                 documento.Close();
                 byte[] pdfBytes = flujo.ToArray();
+
                 return File(pdfBytes, "application/pdf");
-                // return File(memoryStream.ToArray(), "application/pdf", "ClientesReport.pdf");
+
             }
         }
         public IActionResult MostrarPdf()
@@ -216,3 +229,4 @@ namespace Proyecto_1.Controllers
 
 
     }
+}

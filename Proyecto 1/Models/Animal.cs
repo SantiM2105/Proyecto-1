@@ -2,7 +2,7 @@
 
 namespace Proyecto_1.Models
 {
-    public class Animales
+    public class Animal
     {
         [Key]
         public int IdAnimal { get; set; }

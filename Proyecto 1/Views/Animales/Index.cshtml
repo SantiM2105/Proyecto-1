@@ -1,9 +1,4 @@
-﻿@model IEnumerable<Proyecto_1.Models.Animales>
-@{
-    ViewData["Title"] = "Inventario de Animales";
-}
-
-<div class="d-flex justify-content-between align-items-center mb-4">
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-bug"></i> Inventario de Animales</h2>
     <a asp-action="Crear" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Nuevo Animal
@@ -22,7 +17,7 @@
                         <th>Hábitat</th>
                         <th>Edad</th>
                         <th>Estado Salud</th>
-                        <th>Cuidador</th>
+                        <th>Cuidadores</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -32,35 +27,26 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.IdAnimal</td>
+                                <td>@item.Id</td> <!-- ← Cambiado -->
                                 <td>@item.Nombre</td>
                                 <td>@item.Especie</td>
                                 <td>@item.Habitat</td>
                                 <td>@item.Edad años</td>
                                 <td>
-                                    <span class="badge bg-success">@item.EstadoSalud</span>
-                                </td>
-                                <td>
-                                    @if (item.Cuidador != null)
-                                    {
-                                        <span>@item.Cuidador.Nombre @item.Cuidador.Apellido</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">Sin asignar</span>
-                                    }
-                                </td>
+                                    <span class="badge @GetSaludBadge(item.Salud)">@item.Salud
+                                </td> <!-- ← Cambiado -->
+                                <td>@(item.Cuidadores ?? "No asignado")</td> <!-- ← Simplificado -->
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a asp-action="Detalles" asp-route-id="@item.IdAnimal"
+                                        <a asp-action="Detalles" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-info text-white" title="Ver Detalles">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a asp-action="Editar" asp-route-id="@item.IdAnimal"
+                                        <a asp-action="Editar" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-warning" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a asp-action="Eliminar" asp-route-id="@item.IdAnimal"
+                                        <a asp-action="Eliminar" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-danger" title="Eliminar">
                                             <i class="bi bi-trash"></i>
                                         </a>
@@ -82,3 +68,19 @@
         </div>
     </div>
 </div>
+
+@functions {
+    string GetSaludBadge(string salud)
+    {
+        if (string.IsNullOrEmpty(salud)) return "bg-secondary";
+
+        return salud.ToLower() switch
+        {
+            "excelente" => "bg-success",
+            "buena" => "bg-primary",
+            "regular" => "bg-warning",
+            "mala" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}

@@ -8,7 +8,7 @@ namespace Proyecto_1.Data
         public SelvaDbContext(DbContextOptions<SelvaDbContext> options) : base(options) { }
 
         public DbSet<Cuidadores> Cuidadores { get; set; }
-        public DbSet<Animales> Animales { get; set; }
+        public DbSet<Animal> Animales { get; set; }
         public DbSet<Visitantes> Visitantes { get; set; }
         public DbSet<MovimientoVisitas> MovimientoVisitas { get; set; }
 
@@ -35,7 +35,7 @@ namespace Proyecto_1.Data
                 .HasForeignKey(m => m.IdCuidador)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Animales>()
+            modelBuilder.Entity<Animal>()
                 .HasOne(a => a.Cuidador)
                 .WithMany()
                 .HasForeignKey(a => a.IdCuidador)
