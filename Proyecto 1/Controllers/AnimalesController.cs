@@ -163,5 +163,56 @@ namespace Proyecto_1.Controllers
         {
             return _context.Animales.Any(e => e.IdAnimal == id);
         }
+    
+
+    public async Task<IActionResult> Reporte()
+        {
+            return View(await _context.Animales.ToListAsync());
+        }
+        public async Task<IActionResult> GenerarPdf()
+        {
+            var animales = await _context.Animales.ToListAsync();
+            using (var flujo = new MemoryStream())
+            {
+                PdfWriter escribir = new PdfWriter(flujo);
+                PdfDocument pdf = new PdfDocument(escribir);
+                Document documento = new Document(pdf);
+                documento.Add(new Paragraph("Reporte de Animales")
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(20));
+                Table tabla = new Table(new float[] { 1, 2, 2, 2, 2 }).UseAllAvailableWidth();
+                tabla.AddHeaderCell("Nit");
+                tabla.AddHeaderCell("Empresa");
+                tabla.AddHeaderCell("Dirección");
+                tabla.AddHeaderCell("Teléfono");
+                tabla.AddHeaderCell("Ciudad");
+                foreach (var animales in Animales)
+                {
+                    // Filas de datos
+                    tabla.AddCell(animales.Nit.ToString());
+                    tabla.AddCell(animales.Empresa);
+                    tabla.AddCell(animales.Direccion);
+                    tabla.AddCell(animales.Telefono);
+                    tabla.AddCell(animales.Ciudad);
+                }
+                documento.Add(tabla);
+                documento.Add(new Paragraph("Reporte generado el " +
+                DateTime.Now.ToString("dd/MM/yyyy"))
+                .SetTextAlignment(TextAlignment.RIGHT)
+                .SetFontSize(12));
+                documento.Close();
+                byte[] pdfBytes = flujo.ToArray();
+                return File(pdfBytes, "application/pdf");
+                // return File(memoryStream.ToArray(), "application/pdf", "ClientesReport.pdf");
+            }
+        }
+        public IActionResult MostrarPdf()
+        {
+            return View();
+        }
+
+
+
+
+
     }
-}
