@@ -1,0 +1,85 @@
+﻿@model Proyecto_1.Models.Animales
+@{
+    ViewData["Title"] = "Editar Animal";
+}
+
+<h2><i class="bi bi-pencil"></i> Editar Animal</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Editar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="IdAnimal" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Nombre" class="form-label">Nombre del Animal</label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Especie" class="form-label">Especie</label>
+                            <input asp-for="Especie" class="form-control" />
+                            <span asp-validation-for="Especie" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Habitat" class="form-label">Hábitat</label>
+                            <input asp-for="Habitat" class="form-control" />
+                            <span asp-validation-for="Habitat" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Edad" class="form-label">Edad (años)</label>
+                            <input asp-for="Edad" type="number" class="form-control" min="0" />
+                            <span asp-validation-for="Edad" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EstadoSalud" class="form-label">Estado de Salud</label>
+                            <select asp-for="EstadoSalud" class="form-select">
+                                <option value="">Seleccione...</option>
+                                <option value="Excelente">Excelente</option>
+                                <option value="Bueno">Bueno</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Delicado">Delicado</option>
+                            </select>
+                            <span asp-validation-for="EstadoSalud" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="IdCuidador" class="form-label">Cuidador Asignado</label>
+                            <select asp-for="IdCuidador" class="form-select" asp-items="ViewBag.IdCuidador">
+                                <option value="">Sin asignar</option>
+                            </select>
+                            <span asp-validation-for="IdCuidador" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex mt-3">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save"></i> Actualizar
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

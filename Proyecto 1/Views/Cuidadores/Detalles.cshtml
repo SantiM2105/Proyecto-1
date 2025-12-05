@@ -1,0 +1,34 @@
+﻿@model Proyecto_1.Models.Cuidadores
+@{
+    ViewData["Title"] = "Detalles del Cuidador";
+}
+
+<h2><i class="bi bi-eye"></i> Detalles del Cuidador</h2>
+<hr />
+
+<div class="card">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Información del Cuidador</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">@Model.IdCuidadores</dd>
+
+            <dt class="col-sm-3">Nombre Completo:</dt>
+            <dd class="col-sm-9">@Model.Nombre @Model.Apellido</dd>
+
+            <dt class="col-sm-3">Teléfono:</dt>
+            <dd class="col-sm-9">@Model.Telefono</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Editar" asp-route-id="@Model.IdCuidadores" class="btn btn-warning">
+        <i class="bi bi-pencil"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver al Listado
+    </a>
+</div>

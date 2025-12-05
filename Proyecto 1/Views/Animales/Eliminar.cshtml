@@ -1,0 +1,61 @@
+﻿@model Proyecto_1.Models.Animales
+@{
+    ViewData["Title"] = "Eliminar Animal";
+}
+
+<h2 class="text-danger"><i class="bi bi-trash"></i> Eliminar Animal</h2>
+<hr />
+
+<div class="alert alert-warning">
+    <h5><i class="bi bi-exclamation-triangle"></i> ¿Está seguro que desea eliminar este animal?</h5>
+    <p class="mb-0">Esta acción no se puede deshacer y eliminará todos los registros relacionados.</p>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Información del Animal</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">@Model.IdAnimal</dd>
+
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Especie:</dt>
+            <dd class="col-sm-9">@Model.Especie</dd>
+
+            <dt class="col-sm-3">Hábitat:</dt>
+            <dd class="col-sm-9">@Model.Habitat</dd>
+
+            <dt class="col-sm-3">Edad:</dt>
+            <dd class="col-sm-9">@Model.Edad años</dd>
+
+            <dt class="col-sm-3">Estado de Salud:</dt>
+            <dd class="col-sm-9">@Model.EstadoSalud</dd>
+
+            <dt class="col-sm-3">Cuidador:</dt>
+            <dd class="col-sm-9">
+                @if (Model.Cuidador != null)
+                {
+                    <span>@Model.Cuidador.Nombre @Model.Cuidador.Apellido</span>
+                }
+                else
+                {
+                    <span class="text-muted">Sin asignar</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Eliminar" class="mt-3">
+    <input type="hidden" asp-for="IdAnimal" />
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Confirmar Eliminación
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </a>
+</form>

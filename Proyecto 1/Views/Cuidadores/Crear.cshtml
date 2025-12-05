@@ -1,0 +1,52 @@
+﻿@model Proyecto_1.Models.Cuidadores
+@{
+    ViewData["Title"] = "Nuevo Cuidador";
+}
+
+<h2><i class="bi bi-plus-circle"></i> Crear Nuevo Cuidador</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Crear">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label">Nombre</label>
+                        <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Apellido" class="form-label">Apellido</label>
+                        <input asp-for="Apellido" class="form-control" placeholder="Ingrese el apellido" />
+                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Telefono" class="form-label">Teléfono</label>
+                        <input asp-for="Telefono" class="form-control" placeholder="Ej: 3001234567" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-save"></i> Guardar
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

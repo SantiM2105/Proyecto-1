@@ -1,0 +1,43 @@
+﻿@model Proyecto_1.Models.Cuidadores
+@{
+    ViewData["Title"] = "Eliminar Cuidador";
+}
+
+<h2 class="text-danger"><i class="bi bi-trash"></i> Eliminar Cuidador</h2>
+<hr />
+
+<div class="alert alert-warning">
+    <h5><i class="bi bi-exclamation-triangle"></i> ¿Está seguro que desea eliminar este cuidador?</h5>
+    <p class="mb-0">Esta acción no se puede deshacer.</p>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Información del Cuidador</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">@Model.IdCuidadores</dd>
+
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Apellido:</dt>
+            <dd class="col-sm-9">@Model.Apellido</dd>
+
+            <dt class="col-sm-3">Teléfono:</dt>
+            <dd class="col-sm-9">@Model.Telefono</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Eliminar" class="mt-3">
+    <input type="hidden" asp-for="IdCuidadores" />
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Confirmar Eliminación
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </a>
+</form>
